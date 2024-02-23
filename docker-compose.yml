@@ -1,0 +1,16 @@
+x-common: &common
+  logging:
+    driver: local
+  network_mode: host
+  restart: unless-stopped
+
+services:
+  rabbitmq:
+    <<: *common
+    # image: "rabbitmq:3-management"
+    image: "rabbitmq:latest"
+    container_name: rabbitmq
+    healthcheck:
+      interval: 5s
+      start_period: 60s
+      test: rabbitmq-diagnostics -q ping
